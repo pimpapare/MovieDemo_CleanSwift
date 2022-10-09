@@ -1,0 +1,6 @@
+framework module Pods_MovieDemo_CleanSwift {
+  umbrella header "Pods-MovieDemo_CleanSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
