@@ -16,14 +16,7 @@ enum Login {
     struct Response{
         
     }
-    struct ViewModel {
+    struct ViewModel{
         
-        struct User {
-            
-            var email: String?
-            var password: String?
-            
-            var confirmPassword: String?
-        }
     }
 }

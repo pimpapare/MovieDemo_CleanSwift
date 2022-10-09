@@ -18,8 +18,8 @@ class LoginPresenter {
 
 extension LoginPresenter: LoginPresentationLogic {
     
-    func presentSomethingOnSuccess(response: Login.Something.Response) {
-        let viewModel = Login.Something.ViewModel()
+    func presentSomethingOnSuccess(response: Login.Response) {
+        let viewModel = Login.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)
     }
 

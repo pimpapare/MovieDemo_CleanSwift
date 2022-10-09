@@ -13,9 +13,14 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var heightTableView: NSLayoutConstraint!
     
+    lazy var user = {
+        return Authen.ViewModel.User()
+    }()
+    
     var interactor: RegisterBusinessLogic?
     var router: (RegisterRoutingLogic & RegisterDataPassing)?
-
+    var isNeedVerify: Bool = false
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
       super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
       configure()
@@ -97,6 +102,7 @@ extension RegisterViewController : RegisterDisplayLogic {
 
 // MARK: Setup & Configuration
 extension RegisterViewController {
+    
     private func configure() {
         RegisterConfiguration.shared.configure(self)
     }
@@ -127,11 +133,11 @@ extension RegisterViewController: UITableViewDataSource {
         let identifier: String = InputWithErrorCell.identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? InputWithErrorCell
         cell?.delegate = self
-//        cell?.prepareCell(with: type, user: user)
-//
-//        if isNeedVerify {
-//            cell?.verifyCell(with: type, user: user)
-//        }
+        cell?.prepareCell(with: type, user: user)
+
+        if isNeedVerify {
+            cell?.verifyCell(with: type, user: user)
+        }
         
         return cell!
     }
@@ -153,15 +159,15 @@ extension RegisterViewController: InputWithErrorDelegate {
     
     func userDidUpdateText(text: String, with type: Authen) {
         
-//        switch type {
-//        case .email:
-//            user.email = text
-//        case .password:
-//            user.password = text
-//        case .confirmPassword:
-//            user.confirmPassword = text
-//        default: break
-//        }
+        switch type {
+        case .email:
+            user.email = text
+        case .password:
+            user.password = text
+        case .confirmPassword:
+            user.confirmPassword = text
+        default: break
+        }
     }
 }
 
@@ -179,7 +185,7 @@ extension RegisterViewController: ButtonDelegate {
     
     func verifyFormFailed() {
         
-//        isNeedVerify = true
+        isNeedVerify = true
         reloadData()
     }
     

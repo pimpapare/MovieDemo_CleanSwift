@@ -20,10 +20,10 @@ class LoginInteractor {
 }
 
 extension LoginInteractor: LoginDataStore, LoginBusinessLogic {
-    func doSomething(request: Login.Something.Request) {
+    func doSomething(request: Login.Request) {
         worker?.doSomeWork()
         
-        let response = Login.Something.Response()
+        let response = Login.Response()
         presenter?.presentSomethingOnSuccess(response: response)
     }
 }

@@ -10,18 +10,18 @@ import Foundation
 
 //MARK: ViewController
 protocol LoginDisplayLogic {
-    func displaySomethingOnSuccess(viewModel: Login.Something.ViewModel)
+    func displaySomethingOnSuccess(viewModel: Login.ViewModel)
     func displayErrorMessage(errorMessage: String)   
 }
 
 //MARK: Interactor
 protocol LoginBusinessLogic {
-    func doSomething(request: Login.Something.Request)
+    func doSomething(request: Login.Request)
 }
 
 //MARK: Presenter
 protocol LoginPresentationLogic {
-    func presentSomethingOnSuccess(response: Login.Something.Response)
+    func presentSomethingOnSuccess(response: Login.Response)
     func presentErrorMessage(errorMessage: String)
 }
 

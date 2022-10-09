@@ -16,7 +16,9 @@ class LoginViewController: UIViewController {
     var interactor: LoginBusinessLogic?
     var router: (LoginRoutingLogic & LoginDataPassing)?
     
-    var user: User? = Login.user
+    lazy var user = {
+        return Authen.ViewModel.User()
+    }()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
       super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -95,7 +97,7 @@ class LoginViewController: UIViewController {
     }
     
     func doSomething() {
-        let request = Login.Something.Request()
+        let request = Login.Request()
         interactor?.doSomething(request: request)
     }
     
@@ -106,7 +108,7 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: LoginDisplayLogic {
     
-    func displaySomethingOnSuccess(viewModel: Login.Something.ViewModel) {
+    func displaySomethingOnSuccess(viewModel: Login.ViewModel) {
         
     }
 
@@ -183,13 +185,13 @@ extension LoginViewController: InputWithErrorDelegate {
     
     func userDidUpdateText(text: String, with type: Authen) {
         
-//        switch type {
-//        case .email:
-//            user.email = text
-//        case .password:
-//            user.password = text
-//        default: break
-//        }
+        switch type {
+        case .email:
+            user.email = text
+        case .password:
+            user.password = text
+        default: break
+        }
     }
 }
 

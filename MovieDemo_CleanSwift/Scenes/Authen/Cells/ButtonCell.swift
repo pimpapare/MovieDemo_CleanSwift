@@ -50,13 +50,13 @@ class ButtonCell: UITableViewCell {
         }
     }
     
-    func verifyEnableLoginButton(with user: User) {
+    func verifyEnableLoginButton(with user: Authen.ViewModel.User) {
         
         let isEnable: Bool = ((user.email?.count ?? 0) > 0 && (user.password?.count ?? 0) > 0)
         setEnableButton(isEnable)
     }
     
-    func verifyEnableRegisterButton(with user: User) {
+    func verifyEnableRegisterButton(with user: Authen.ViewModel.User) {
         
         let isEnable: Bool = ((user.email?.count ?? 0) > 0 && (user.password?.count ?? 0) > 0 && (user.confirmPassword?.count ?? 0) > 0)
         setEnableButton(isEnable)

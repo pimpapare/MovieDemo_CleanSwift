@@ -38,7 +38,7 @@ class InputWithErrorCell: UITableViewCell {
         txError.text = nil
     }
     
-    func prepareCell(with type: Authen, user: User?) {
+    func prepareCell(with type: Authen, user: Authen.ViewModel.User?) {
         
         currentType = type
         
@@ -79,7 +79,7 @@ class InputWithErrorCell: UITableViewCell {
         txError.text = text
     }
     
-    func verifyCell(with type: Authen, user: User) {
+    func verifyCell(with type: Authen, user: Authen.ViewModel.User) {
         
         setErrorText(with: nil)
 

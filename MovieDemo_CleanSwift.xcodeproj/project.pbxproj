@@ -48,7 +48,6 @@
 		2B45AF3128F2C57A007FE037 /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B45AF2928F2C57A007FE037 /* ButtonCell.xib */; };
 		2B45AF3228F2C57A007FE037 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF2A28F2C57A007FE037 /* ImageCell.swift */; };
 		2B45AF3528F2C588007FE037 /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3328F2C588007FE037 /* Authen.swift */; };
-		2B45AF3628F2C588007FE037 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3428F2C588007FE037 /* User.swift */; };
 		2B45AF3B28F2C598007FE037 /* AuthenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3828F2C597007FE037 /* AuthenManager.swift */; };
 		2B45AF3C28F2C598007FE037 /* AuthenRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3928F2C597007FE037 /* AuthenRemote.swift */; };
 		2B45AF3D28F2C598007FE037 /* AuthenLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3A28F2C598007FE037 /* AuthenLocal.swift */; };
@@ -170,7 +169,6 @@
 		2B45AF2928F2C57A007FE037 /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		2B45AF2A28F2C57A007FE037 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		2B45AF3328F2C588007FE037 /* Authen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
-		2B45AF3428F2C588007FE037 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2B45AF3828F2C597007FE037 /* AuthenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenManager.swift; sourceTree = "<group>"; };
 		2B45AF3928F2C597007FE037 /* AuthenRemote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenRemote.swift; sourceTree = "<group>"; };
 		2B45AF3A28F2C598007FE037 /* AuthenLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenLocal.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 			children = (
 				2B45AF7E28F2C695007FE037 /* Authen.storyboard */,
 				2B45AF3328F2C588007FE037 /* Authen.swift */,
-				2B45AF3428F2C588007FE037 /* User.swift */,
 				2B45AF3728F2C590007FE037 /* CoreData */,
 				2B45AF2228F2C53C007FE037 /* Cells */,
 				2B45AEFC28F2BF66007FE037 /* Register */,
@@ -893,7 +890,6 @@
 				2B45AF1828F2BF91007FE037 /* MovieListWorker.swift in Sources */,
 				2B45AF0928F2BF74007FE037 /* RegisterModels.swift in Sources */,
 				2B45AF6428F2C63B007FE037 /* MovieFavoriteModels.swift in Sources */,
-				2B45AF3628F2C588007FE037 /* User.swift in Sources */,
 				2B45AF6028F2C63A007FE037 /* MovieFavoriteConfiguration.swift in Sources */,
 				2B45AF7428F2C64C007FE037 /* MovieDetailModels.swift in Sources */,
 				2B45AF1C28F2BF91007FE037 /* MovieListInteractor.swift in Sources */,
