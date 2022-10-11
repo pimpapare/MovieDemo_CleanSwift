@@ -116,12 +116,12 @@ extension MovieLocal {
         return savedMovies
     }
     
-    func saveMovieStatus(of movie: MD_Movie, isFav: Bool, documentId: String?) {
+    func saveMovieStatus(of movie: MD_Movie?, isFav: Bool, documentId: String?) {
         
         let savedMovie: MD_Movie?
         
         let fetchRequest: NSFetchRequest<MD_Movie> = NSFetchRequest(entityName: "MD_Movie")
-        fetchRequest.predicate = NSPredicate(format: "title == %@", movie.title ?? "")
+        fetchRequest.predicate = NSPredicate(format: "title == %@", movie?.title ?? "")
         fetchRequest.returnsObjectsAsFaults = false
         
         var result = [MD_Movie]()

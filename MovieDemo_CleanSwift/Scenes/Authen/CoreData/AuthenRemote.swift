@@ -34,15 +34,15 @@ extension AuthenRemote {
         }
     }
     
-    func userSignout(completion: @escaping (_ success: Bool)-> Void) {
+    func userSignout(completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void) {
         
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-            completion(true)
+            completion(true, nil)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
-            completion(false)
+            completion(false, signOutError.localizedDescription)
         }
     }
 }

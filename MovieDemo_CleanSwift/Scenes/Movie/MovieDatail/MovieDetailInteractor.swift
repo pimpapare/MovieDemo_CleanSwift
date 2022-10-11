@@ -9,6 +9,8 @@
 import UIKit
 
 class MovieDetailInteractor {
+    
+    var movie: MD_Movie?
     var presenter: MovieDetailPresentationLogic?
     var worker: MovieDetailWorkerProtocol?
 
@@ -20,10 +22,28 @@ class MovieDetailInteractor {
 }
 
 extension MovieDetailInteractor: MovieDetailDataStore, MovieDetailBusinessLogic {
-    func doSomething(request: MovieDetail.Something.Request) {
-        worker?.doSomeWork()
         
-        let response = MovieDetail.Something.Response()
+    func displayWebsite(with movie: MD_Movie?) {
+
+        guard let url = URL(string: movie?.url ?? "") else { return }
+        presenter?.presentSafari(with: url)
+    }
+
+    func doSomething(request: MovieDetail.Request) {
+                
+        let response = MovieDetail.Response()
         presenter?.presentSomethingOnSuccess(response: response)
+    }
+    
+    func updateMovieStatus(request: MovieDetail.Request) {
+        
+        worker?.updateMovieStatus(request: request, completion: { success, errorMessage in
+            
+            if let error = errorMessage {
+                self.presenter?.presentErrorMessage(errorMessage: error)
+            }else {
+                self.presenter?.updateMovieStatusSuccess()
+            }
+        })
     }
 }

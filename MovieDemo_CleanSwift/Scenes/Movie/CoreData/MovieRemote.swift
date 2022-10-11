@@ -42,18 +42,63 @@ public class MovieRemote {
         }
     }
     
-    func updateMovieStatus(with movie: MD_Movie, userId: String,
+    func updateMovieStatus(documentId: String?, movie: MD_Movie?, userId: String?,
+                           completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void) {
+        
+        guard let currentUserId = userId, let updateMovie = movie else {
+            completion(false, nil)
+            return
+        }
+        
+        var movieDocumentId: String? = documentId
+        
+        if updateMovie.isFav {
+            
+            setFavoriteMovie(with: movie, userId: currentUserId) { success, errorMessage, responseDocumentId in
+                
+                if let value = responseDocumentId {
+                    
+                    completion(true, nil)
+                    MovieLocal.shared.saveMovieStatus(of: movie, isFav: true, documentId: value)
+                }
+            }
+            
+        }else {
+                        
+            if (movieDocumentId?.count ?? 0) <= 0 {
+                movieDocumentId = MovieLocal.shared.fetchMovie(from: updateMovie.title ?? "")?.documentId ?? ""
+            }
+            
+            guard (movieDocumentId?.count ?? 0) > 0 else {
+                completion(false, nil)
+                return
+            }
+            
+            removeFavoriteMovie(from: currentUserId, documentId: movieDocumentId ?? "") { success, errorMessage in
+                
+                completion(true, nil)
+                MovieLocal.shared.saveMovieStatus(of: movie, isFav: false, documentId: "")
+            }
+        }
+    }
+    
+    func setFavoriteMovie(with movie: MD_Movie?, userId: String,
                            completion: @escaping (_ success: Bool, _ errorMessage: String?, _ documentId: String?)-> Void) {
+        
+        guard let updatedMovie = movie else {
+            completion(false, nil, nil)
+            return
+        }
         
         var ref: DocumentReference? = nil
         
         ref = db?.collection(userId).addDocument(data: [
-            "malId": movie.malId,
-            "title": movie.title ?? "",
-            "score": movie.score,
-            "image": movie.image ?? "",
-            "small_image": movie.smallImage ?? "",
-            "large_image": movie.largeImage ?? ""
+            "malId": updatedMovie.malId,
+            "title": updatedMovie.title ?? "",
+            "score": updatedMovie.score,
+            "image": updatedMovie.image ?? "",
+            "small_image": updatedMovie.smallImage ?? "",
+            "large_image": updatedMovie.largeImage ?? ""
         ]) { err in
             
             completion(err == nil, err?.localizedDescription, ref?.documentID)

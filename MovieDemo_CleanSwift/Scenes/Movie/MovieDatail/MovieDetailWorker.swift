@@ -9,7 +9,14 @@
 import UIKit
 
 class MovieDetailWorker: MovieDetailWorkerProtocol {
-    func doSomeWork() {
+    
+    func updateMovieStatus(request: MovieDetail.Request,
+                           completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void) {
         
+        MovieRemote.shared.updateMovieStatus(documentId: request.movie?.documentId,
+                                             movie: request.movie, userId: request.userId) { success, errorMessage in
+            
+            completion(success, errorMessage)
+        }
     }
 }

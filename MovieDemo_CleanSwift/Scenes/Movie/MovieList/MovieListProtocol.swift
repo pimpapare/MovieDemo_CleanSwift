@@ -10,34 +10,70 @@ import Foundation
 
 //MARK: ViewController
 protocol MovieListDisplayLogic {
-    func displaySomethingOnSuccess(viewModel: MovieList.Something.ViewModel)
-    func displayErrorMessage(errorMessage: String)   
+    
+    func displayLoading(_ isLoading: Bool)
+
+    func fetchMovieListSuccess(viewModel: MovieList.ViewModel)
+    func presentFavoriteMovie(response: MovieList.Response)
+    
+    func displaySomethingOnSuccess(viewModel: MovieList.ViewModel)
+    func displayErrorMessage(errorMessage: String)
 }
 
 //MARK: Interactor
 protocol MovieListBusinessLogic {
-    func doSomething(request: MovieList.Something.Request)
+    
+    func filterMovie(with searchText: String, movies: [MD_Movie]?)
+    
+    func fetchMovie(request: MovieList.Request)
+    func fetchLocalMovieList()
+    
+    func updateMovieStatus(request: MovieList.Request)
+    
+    func userSignout()
+    func doSomething(request: MovieList.Request)
+    
+    func displayMovieFavorite(viewModel: MovieList.ViewModel)
 }
 
 //MARK: Presenter
 protocol MovieListPresentationLogic {
-    func presentSomethingOnSuccess(response: MovieList.Something.Response)
+    
+    func presentLoader(_ isLoading: Bool)
+
+    func fetchMovieListSuccess(response: MovieList.Response)
+    
+    func updateMovieStatusSuccess(response: MovieList.Response)
+    
+    func userSignoutSucess(response: MovieList.Response)
+    func presentFavoriteMovie(response: MovieList.Response)
+    
+    func presentSomethingOnSuccess(response: MovieList.Response)
     func presentErrorMessage(errorMessage: String)
 }
 
 //MARK: Worker
-@objc protocol MovieListWorkerProtocol {
-    func doSomeWork()
+protocol MovieListWorkerProtocol {
+    
+    func fetchMovie(request: MovieList.Request, completion: @escaping (_ success: Bool, _ errorMessage: String?, _ result: [MD_Movie]?)-> Void)
+    func fetchMovieFavorite(request: MovieList.Request, completion: @escaping (_ success: Bool, _ errorMessage: String?, _ result: [MD_Movie]?)-> Void)
+    func updateMovieStatus(request: MovieList.Request, completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void)
+    
+    func fetchLocalMovieList(completion: @escaping (_ movieList: [MD_Movie]?)-> Void)
+    func userSignout(completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void)
 }
 
 //MARK: Routable
 @objc protocol MovieListRoutingLogic {
-
+    
+    func displayMovieDetail(with movie: MD_Movie?)
 }
 
 //MARK: DataStore
 protocol MovieListDataStore {
-
+    
+    var movie: MD_Movie? { get }
+    var movieList: [MD_Movie]? { get }
 }
 
 //MARK: DataPassing

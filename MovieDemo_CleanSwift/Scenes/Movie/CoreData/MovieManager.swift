@@ -15,13 +15,16 @@ class MovieManager: NSObject {
 
 extension MovieManager {
     
-    func fetchMovie(of userId: String, with name: String, completion: @escaping (_ success: Bool, _ errorMessage: String?, _ result: [MD_Movie]?)-> Void) {
+    func fetchMovie(of userId: String?, with name: String,
+                    completion: @escaping (_ success: Bool, _ errorMessage: String?,
+                                           _ result: [MD_Movie]?)-> Void) {
         
         MovieRemote.shared.fetchMovie(with: name) { success, errorMessage, result in
             
             if let value = result {
                 
-                self.fetchMovieFavorite(of: userId, allAnieme: value) { success, errorMessage, response in
+                self.fetchMovieFavorite(of: userId ?? "",
+                                        allAnieme: value) { success, errorMessage, response in
                     
                     completion(success, errorMessage, response)
                 }
@@ -107,10 +110,10 @@ extension MovieManager {
     func makeAsFavoriteMovie(of movie: MD_Movie, userId: String,
                              completion: @escaping (_ success: Bool, _ errorMessage: String?, _ documentId: String?)-> Void) {
         
-        MovieRemote.shared.updateMovieStatus(with: movie, userId: userId) { success, errorMessage, documentId in
-            
-            completion(success, errorMessage, documentId)
-        }
+//        MovieRemote.shared.updateMovieStatus(with: movie, userId: userId) { success, errorMessage, documentId in
+//            
+//            completion(success, errorMessage, documentId)
+//        }
     }
     
     func unMakeAsFavoriteMovie(from documentId: String, userId: String,

@@ -9,6 +9,12 @@
 import UIKit
 
 class MovieFavoriteRouter: NSObject, MovieFavoriteRoutingLogic, MovieFavoriteDataPassing {
+    
     weak var viewController: MovieFavoriteViewController?
     var dataStore: MovieFavoriteDataStore?
+
+    func displayMovieDetail(with movie: MD_Movie?) {
+        
+        viewController?.presentMovieDetail(with: movie)
+    }
 }

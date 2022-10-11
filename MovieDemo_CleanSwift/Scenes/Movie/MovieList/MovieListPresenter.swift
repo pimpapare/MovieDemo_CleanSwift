@@ -18,12 +18,35 @@ class MovieListPresenter {
 
 extension MovieListPresenter: MovieListPresentationLogic {
     
-    func presentSomethingOnSuccess(response: MovieList.Something.Response) {
-        let viewModel = MovieList.Something.ViewModel()
+    func presentLoader(_ isLoading: Bool) {
+        viewController?.displayLoading(isLoading)
+    }
+
+    func fetchMovieListSuccess(response: MovieList.Response) {
+        
+        let viewModel = MovieList.ViewModel(movieList: response.movieList,
+                                            filterMovieList: response.filterMovieList)
+        viewController?.fetchMovieListSuccess(viewModel: viewModel)
+    }
+    
+    func updateMovieStatusSuccess(response: MovieList.Response) {
+        
+    }
+
+    func userSignoutSucess(response: MovieList.Response) {
+        
+    }
+    
+    func presentSomethingOnSuccess(response: MovieList.Response) {
+        let viewModel = MovieList.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)
     }
 
     func presentErrorMessage(errorMessage: String) {
         viewController?.displayErrorMessage(errorMessage: errorMessage)
+    }
+    
+    func presentFavoriteMovie(response: MovieList.Response) {
+        viewController?.presentFavoriteMovie(response: response)
     }
 }
