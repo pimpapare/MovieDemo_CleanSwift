@@ -9,15 +9,21 @@
 import UIKit
 
 enum Register {
-    enum Something {
-        struct Request{
-
-        }
-        struct Response{
-
-        }
-        struct ViewModel{
-
-        }
+    
+    struct Request{
+        
+        var email: String?
+        var password: String?
+        
+        var confirmPassword: String?
+    }
+    
+    struct Response{
+        
+        var user: MD_User?
+    }
+    struct ViewModel{
+        
+      
     }
 }

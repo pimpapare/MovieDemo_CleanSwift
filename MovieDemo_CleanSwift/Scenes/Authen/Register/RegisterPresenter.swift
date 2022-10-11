@@ -18,8 +18,20 @@ class RegisterPresenter {
 
 extension RegisterPresenter: RegisterPresentationLogic {
     
-    func presentSomethingOnSuccess(response: Register.Something.Response) {
-        let viewModel = Register.Something.ViewModel()
+    func setTableViewHeight(with height: CGFloat) {
+        viewController?.setTableViewHeight(with: height)
+    }
+
+    func presentLoader(_ isLoading: Bool) {
+        viewController?.displayLoading(isLoading)
+    }
+    
+    func userSignupSuccess(response: Register.Response?) {
+        viewController?.displayLogin()
+    }
+    
+    func presentSomethingOnSuccess(response: Register.Response) {
+        let viewModel = Register.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)
     }
 

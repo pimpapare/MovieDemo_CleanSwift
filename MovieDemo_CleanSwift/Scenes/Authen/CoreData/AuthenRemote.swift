@@ -16,7 +16,7 @@ class AuthenRemote: NSObject {
 
 extension AuthenRemote {
     
-    func userRegister(with email: String, password: String,
+    func userSignup(with email: String, password: String,
                       completion: @escaping (_ result: AuthDataResult?, _ errorMessage: String?)-> Void) {
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in

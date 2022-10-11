@@ -15,8 +15,9 @@ class LoginViewController: UIViewController {
     
     var interactor: LoginBusinessLogic?
     var router: (LoginRoutingLogic & LoginDataPassing)?
-    
-    var user: User? = Login.user
+    var request = Login.Request()
+
+    var isNeedVerify: Bool = false
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
       super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -95,7 +96,7 @@ class LoginViewController: UIViewController {
     }
     
     func doSomething() {
-        let request = Login.Something.Request()
+        let request = Login.Request()
         interactor?.doSomething(request: request)
     }
     
@@ -106,19 +107,41 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: LoginDisplayLogic {
     
-    func displaySomethingOnSuccess(viewModel: Login.Something.ViewModel) {
+    func displayMovieList(with user: MD_User?) {
+        
+        LoadIndicator.dismissLoading()
+        self.dismiss(animated: true)
+    }
+    
+    func displayLoading(_ isLoading: Bool) {
+        
+        LoadIndicator.displayLoading(isLoading)
+    }
+
+    func displaySomethingOnSuccess(viewModel: Login.ViewModel) {
         
     }
 
     func displayErrorMessage(errorMessage: String) {
         
+        displayLoading(false)
+        
+        let alertController = UIAlertController(title: title, message: errorMessage,
+                                                preferredStyle: .alert)
+        
+        let okeyAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okeyAction)
+        
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
 
 extension LoginViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -159,11 +182,14 @@ extension LoginViewController: UITableViewDataSource {
         let identifier: String = InputWithErrorCell.identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? InputWithErrorCell
         cell?.delegate = self
+        
+        let user = Authen.ViewModel()
+        
         cell?.prepareCell(with: type, user: user)
 
-//        if isNeedVerify {
-//            cell?.verifyCell(with: type, user: user)
-//        }
+        if isNeedVerify {
+            cell?.verifyCell(with: type, user: user)
+        }
         
         return cell!
     }
@@ -182,14 +208,14 @@ extension LoginViewController: UITableViewDataSource {
 extension LoginViewController: InputWithErrorDelegate {
     
     func userDidUpdateText(text: String, with type: Authen) {
-        
-//        switch type {
-//        case .email:
-//            user.email = text
-//        case .password:
-//            user.password = text
-//        default: break
-//        }
+                
+        switch type {
+        case .email:
+            request.email = text
+        case .password:
+            request.password = text
+        default: break
+        }
     }
 }
 
@@ -197,11 +223,8 @@ extension LoginViewController: ButtonDelegate {
     
     func userDidTappedButton(with type: Authen) {
         
-        guard type == .login else {
-            return
-        }
-        
-//        viewModel.verifyForm(with: user)
+        guard type == .login else { return }
+        interactor?.verifyForm(request: request)
     }
     
     func setLoading() {
@@ -213,35 +236,18 @@ extension LoginViewController: ButtonDelegate {
         
         let identifier = "RegisterViewController"
         let viewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? RegisterViewController
-//        viewController?.delegate = self
         viewController?.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(viewController!, animated: true)
     }
     
     func verifyFormFailed() {
         
-//        isNeedVerify = true
+        isNeedVerify = true
         reloadData()
     }
     
     func loginSuccess(with user: MD_User) {
-        
-//        delegate?.loginSuccess(with: user)
         closeView()
-    }
-    
-    func displayAlert(title: String?=nil, detail: String?=nil) {
-        
-        LoadIndicator.dismissLoading()
-
-        let alertController = UIAlertController(title: title, message: detail, preferredStyle: .alert)
-        
-        let okeyAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okeyAction)
-        
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true, completion: nil)
-        }
     }
     
     func closeView() {
@@ -250,15 +256,6 @@ extension LoginViewController: ButtonDelegate {
         self.dismiss(animated: true)
     }
 }
-
-//extension LoginViewController: RegisterViewDelegate {
-//
-//    func registerSuccess(with user: MD_User) {
-//
-////        closeView()
-//    }
-//}
-
 
 extension LoginViewController {
     

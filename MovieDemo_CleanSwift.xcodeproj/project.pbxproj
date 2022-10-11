@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B2CEFFE28F5173C00BA6BB5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B2CEFFD28F5173B00BA6BB5 /* GoogleService-Info.plist */; };
 		2B45AEDB28F2BEBE007FE037 /* LaunchConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AED328F2BEBE007FE037 /* LaunchConfiguration.swift */; };
 		2B45AEDC28F2BEBE007FE037 /* LaunchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AED428F2BEBE007FE037 /* LaunchPresenter.swift */; };
 		2B45AEDD28F2BEBE007FE037 /* LaunchWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AED528F2BEBE007FE037 /* LaunchWorker.swift */; };
@@ -48,8 +49,6 @@
 		2B45AF3128F2C57A007FE037 /* ButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B45AF2928F2C57A007FE037 /* ButtonCell.xib */; };
 		2B45AF3228F2C57A007FE037 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF2A28F2C57A007FE037 /* ImageCell.swift */; };
 		2B45AF3528F2C588007FE037 /* Authen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3328F2C588007FE037 /* Authen.swift */; };
-		2B45AF3628F2C588007FE037 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3428F2C588007FE037 /* User.swift */; };
-		2B45AF3B28F2C598007FE037 /* AuthenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3828F2C597007FE037 /* AuthenManager.swift */; };
 		2B45AF3C28F2C598007FE037 /* AuthenRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3928F2C597007FE037 /* AuthenRemote.swift */; };
 		2B45AF3D28F2C598007FE037 /* AuthenLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3A28F2C598007FE037 /* AuthenLocal.swift */; };
 		2B45AF4228F2C5B4007FE037 /* MovieRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B45AF3F28F2C5B4007FE037 /* MovieRemote.swift */; };
@@ -129,6 +128,7 @@
 /* Begin PBXFileReference section */
 		023476784EC0565768EBE78D /* Pods-MovieDemo_CleanSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieDemo_CleanSwiftTests.debug.xcconfig"; path = "Target Support Files/Pods-MovieDemo_CleanSwiftTests/Pods-MovieDemo_CleanSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2A13A27D1BA02610BC8AF37F /* Pods-MovieDemo_CleanSwift-MovieDemo_CleanSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieDemo_CleanSwift-MovieDemo_CleanSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-MovieDemo_CleanSwift-MovieDemo_CleanSwiftUITests/Pods-MovieDemo_CleanSwift-MovieDemo_CleanSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2B2CEFFD28F5173B00BA6BB5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B45AED328F2BEBE007FE037 /* LaunchConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchConfiguration.swift; sourceTree = "<group>"; };
 		2B45AED428F2BEBE007FE037 /* LaunchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
 		2B45AED528F2BEBE007FE037 /* LaunchWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchWorker.swift; sourceTree = "<group>"; };
@@ -170,8 +170,6 @@
 		2B45AF2928F2C57A007FE037 /* ButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonCell.xib; sourceTree = "<group>"; };
 		2B45AF2A28F2C57A007FE037 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		2B45AF3328F2C588007FE037 /* Authen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authen.swift; sourceTree = "<group>"; };
-		2B45AF3428F2C588007FE037 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		2B45AF3828F2C597007FE037 /* AuthenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenManager.swift; sourceTree = "<group>"; };
 		2B45AF3928F2C597007FE037 /* AuthenRemote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenRemote.swift; sourceTree = "<group>"; };
 		2B45AF3A28F2C598007FE037 /* AuthenLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenLocal.swift; sourceTree = "<group>"; };
 		2B45AF3F28F2C5B4007FE037 /* MovieRemote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieRemote.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 			children = (
 				2B45AF7E28F2C695007FE037 /* Authen.storyboard */,
 				2B45AF3328F2C588007FE037 /* Authen.swift */,
-				2B45AF3428F2C588007FE037 /* User.swift */,
 				2B45AF3728F2C590007FE037 /* CoreData */,
 				2B45AF2228F2C53C007FE037 /* Cells */,
 				2B45AEFC28F2BF66007FE037 /* Register */,
@@ -382,7 +379,6 @@
 			isa = PBXGroup;
 			children = (
 				2B45AF3A28F2C598007FE037 /* AuthenLocal.swift */,
-				2B45AF3828F2C597007FE037 /* AuthenManager.swift */,
 				2B45AF3928F2C597007FE037 /* AuthenRemote.swift */,
 			);
 			path = CoreData;
@@ -533,6 +529,7 @@
 				2BCAFC7928F2BAC6005D4A46 /* Main.storyboard */,
 				2BCAFC8128F2BAC7005D4A46 /* LaunchScreen.storyboard */,
 				2B45AF8228F2C6BB007FE037 /* Assets.xcassets */,
+				2B2CEFFD28F5173B00BA6BB5 /* GoogleService-Info.plist */,
 				2B45AF9128F2C9A5007FE037 /* APIs */,
 				2B45AF9028F2C6F3007FE037 /* Helper */,
 				2B45AEE328F2BEC2007FE037 /* LaunchScreen */,
@@ -705,6 +702,7 @@
 				2B45AF8128F2C6AB007FE037 /* Movie.storyboard in Resources */,
 				2BCAFC7B28F2BAC6005D4A46 /* Main.storyboard in Resources */,
 				2B45AF5428F2C5C7007FE037 /* MovieCell.xib in Resources */,
+				2B2CEFFE28F5173C00BA6BB5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,7 +831,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B45AEFA28F2BF60007FE037 /* LoginInteractor.swift in Sources */,
-				2B45AF3B28F2C598007FE037 /* AuthenManager.swift in Sources */,
 				2B45AF0528F2BF74007FE037 /* RegisterConfiguration.swift in Sources */,
 				2B45AF5328F2C5C7007FE037 /* NoDataCell.swift in Sources */,
 				2B45AF6628F2C63B007FE037 /* MovieFavoriteInteractor.swift in Sources */,
@@ -893,7 +890,6 @@
 				2B45AF1828F2BF91007FE037 /* MovieListWorker.swift in Sources */,
 				2B45AF0928F2BF74007FE037 /* RegisterModels.swift in Sources */,
 				2B45AF6428F2C63B007FE037 /* MovieFavoriteModels.swift in Sources */,
-				2B45AF3628F2C588007FE037 /* User.swift in Sources */,
 				2B45AF6028F2C63A007FE037 /* MovieFavoriteConfiguration.swift in Sources */,
 				2B45AF7428F2C64C007FE037 /* MovieDetailModels.swift in Sources */,
 				2B45AF1C28F2BF91007FE037 /* MovieListInteractor.swift in Sources */,

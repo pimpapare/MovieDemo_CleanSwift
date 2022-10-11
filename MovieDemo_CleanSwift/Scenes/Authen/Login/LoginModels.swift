@@ -12,18 +12,18 @@ enum Login {
     
     struct Request{
         
+        var email: String?
+        var password: String?
+        
+        var confirmPassword: String?
     }
+    
     struct Response{
-        
+        var user: MD_User?
     }
-    struct ViewModel {
+    
+    struct ViewModel{
         
-        struct User {
-            
-            var email: String?
-            var password: String?
-            
-            var confirmPassword: String?
-        }
+        
     }
 }

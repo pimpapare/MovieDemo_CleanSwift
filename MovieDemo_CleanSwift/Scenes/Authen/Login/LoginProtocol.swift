@@ -10,24 +10,36 @@ import Foundation
 
 //MARK: ViewController
 protocol LoginDisplayLogic {
-    func displaySomethingOnSuccess(viewModel: Login.Something.ViewModel)
+    
+    func displayLoading(_ isLoading: Bool)
+    func displayMovieList(with user: MD_User?)
+
+    func displaySomethingOnSuccess(viewModel: Login.ViewModel)
     func displayErrorMessage(errorMessage: String)   
 }
 
 //MARK: Interactor
 protocol LoginBusinessLogic {
-    func doSomething(request: Login.Something.Request)
+    
+    func verifyForm(request: Login.Request)
+    func doSomething(request: Login.Request)
 }
 
 //MARK: Presenter
 protocol LoginPresentationLogic {
-    func presentSomethingOnSuccess(response: Login.Something.Response)
+    
+    func presentLoader(_ isLoading: Bool)
+    func userSigninSuccess(response: Login.Response?)
+
+    func presentSomethingOnSuccess(response: Login.Response)
     func presentErrorMessage(errorMessage: String)
 }
 
 //MARK: Worker
 @objc protocol LoginWorkerProtocol {
-    func doSomeWork()
+    
+    func userSignin(with email: String, password: String,
+                    completion: @escaping (_ user: MD_User?, _ errorMessage: String?)-> Void)
 }
 
 //MARK: Routable
