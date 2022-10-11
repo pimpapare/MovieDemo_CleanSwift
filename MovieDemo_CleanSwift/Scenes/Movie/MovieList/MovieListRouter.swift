@@ -9,6 +9,12 @@
 import UIKit
 
 class MovieListRouter: NSObject, MovieListRoutingLogic, MovieListDataPassing {
+    
     weak var viewController: MovieListViewController?
     var dataStore: MovieListDataStore?
+    
+    func displayMovieDetail(with movie: MD_Movie?) {
+        
+        viewController?.presentMovieDetail(with: movie)
+    }
 }

@@ -10,18 +10,19 @@ import Foundation
 
 //MARK: ViewController
 protocol MovieFavoriteDisplayLogic {
-    func displaySomethingOnSuccess(viewModel: MovieFavorite.Something.ViewModel)
+    func displaySomethingOnSuccess(viewModel: MovieFavorite.ViewModel)
     func displayErrorMessage(errorMessage: String)   
 }
 
 //MARK: Interactor
 protocol MovieFavoriteBusinessLogic {
-    func doSomething(request: MovieFavorite.Something.Request)
+    func doSomething(request: MovieFavorite.Request)
 }
 
 //MARK: Presenter
 protocol MovieFavoritePresentationLogic {
-    func presentSomethingOnSuccess(response: MovieFavorite.Something.Response)
+    
+    func presentSomethingOnSuccess(response: MovieFavorite.Response)
     func presentErrorMessage(errorMessage: String)
 }
 
@@ -33,14 +34,16 @@ protocol MovieFavoritePresentationLogic {
 //MARK: Routable
 @objc protocol MovieFavoriteRoutingLogic {
 
+    func displayMovieDetail(with movie: MD_Movie?)
 }
 
 //MARK: DataStore
 protocol MovieFavoriteDataStore {
 
+    var movieList: [MD_Movie]? { get set }
 }
 
 //MARK: DataPassing
 protocol MovieFavoriteDataPassing {
-    var dataStore: MovieFavoriteDataStore? { get }
+    var dataStore: MovieFavoriteDataStore? { get set}
 }

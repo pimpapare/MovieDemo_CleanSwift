@@ -7,26 +7,8 @@
 
 import UIKit
 
-enum Authen: String{
+enum Authen: String {
     
-    struct Request{
-        
-    }
-    struct Response{
-        
-    }
-    struct ViewModel{
-        
-        struct User{
-            
-            var email: String?
-            var password: String?
-            
-            var confirmPassword: String?
-        }
-    }
-
-    // string 
     case email = "Email"
     case password = "Password"
     
@@ -34,6 +16,20 @@ enum Authen: String{
     case register = "Register"
     
     case confirmPassword = "Re-password"
+    
+    struct Request{
+        
+    }
+    struct Response{
+        
+    }
+    struct ViewModel {
+        
+        var email: String?
+        var password: String?
+        
+        var confirmPassword: String?
+    }
 }
 
 enum AuthenError: String{
@@ -43,4 +39,5 @@ enum AuthenError: String{
     
     case minimumPassword = "The password must be 6 characters long or more."
     case confirmPassword = "Password don't match"
+    
 }

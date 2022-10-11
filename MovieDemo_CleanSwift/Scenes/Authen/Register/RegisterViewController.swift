@@ -19,8 +19,10 @@ class RegisterViewController: UIViewController {
     
     var interactor: RegisterBusinessLogic?
     var router: (RegisterRoutingLogic & RegisterDataPassing)?
+
     var isNeedVerify: Bool = false
-    
+    var request = Register.Request()
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
       super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
       configure()
@@ -80,27 +82,56 @@ class RegisterViewController: UIViewController {
                 
         DispatchQueue.main.async {
             self.tableView.reloadData()
-//            self.setHeightTableView()
+            self.interactor?.setTableViewHeight(with: self.tableView.visibleCells)
         }
     }
     
     func doSomething() {
-        let request = Register.Something.Request()
+        let request = Register.Request()
         interactor?.doSomething(request: request)
     }
 }
 
 extension RegisterViewController : RegisterDisplayLogic {
-    func displaySomethingOnSuccess(viewModel: Register.Something.ViewModel) {
+    
+    func setTableViewHeight(with height: CGFloat) {
+        
+        DispatchQueue.main.async {
+            self.heightTableView.constant = height
+        }
+    }
+
+    func displayLoading(_ isLoading: Bool) {
+        
+        LoadIndicator.displayLoading(isLoading)
+    }
+    
+    func displayLogin() {
+
+        LoadIndicator.displayLoading(false)
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    func displaySomethingOnSuccess(viewModel: Register.ViewModel) {
         
     }
 
     func displayErrorMessage(errorMessage: String) {
         
+        displayLoading(false)
+        
+        let alertController = UIAlertController(title: title, message: errorMessage,
+                                                preferredStyle: .alert)
+        
+        let okeyAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okeyAction)
+        
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
 
-// MARK: Setup & Configuration
 extension RegisterViewController {
     
     private func configure() {
@@ -133,6 +164,9 @@ extension RegisterViewController: UITableViewDataSource {
         let identifier: String = InputWithErrorCell.identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? InputWithErrorCell
         cell?.delegate = self
+        
+        let user = Authen.ViewModel()
+        
         cell?.prepareCell(with: type, user: user)
 
         if isNeedVerify {
@@ -161,11 +195,11 @@ extension RegisterViewController: InputWithErrorDelegate {
         
         switch type {
         case .email:
-            user.email = text
+            request.email = text
         case .password:
-            user.password = text
+            request.password = text
         case .confirmPassword:
-            user.confirmPassword = text
+            request.confirmPassword = text
         default: break
         }
     }
@@ -175,7 +209,8 @@ extension RegisterViewController: ButtonDelegate {
     
     func userDidTappedButton(with type: Authen) {
        
-//        viewModel.verifyForm(with: user)
+        guard type == .register else { return }
+        interactor?.verifyForm(request: request)
     }
     
     func setLoading() {
@@ -189,25 +224,9 @@ extension RegisterViewController: ButtonDelegate {
         reloadData()
     }
     
-    func displayAlert(title: String?=nil, detail: String?=nil) {
-        
-        LoadIndicator.dismissLoading()
-
-        let alertController = UIAlertController(title: title, message: detail, preferredStyle: .alert)
-
-        let okeyAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okeyAction)
-        
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
     func registerSuccess(user: MD_User) {
         
         LoadIndicator.dismissLoading()
-
-//        delegate?.registerSuccess(with: user)
         self.navigationController?.popViewController(animated: true)
     }
 }

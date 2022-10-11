@@ -18,8 +18,8 @@ class MovieFavoritePresenter {
 
 extension MovieFavoritePresenter: MovieFavoritePresentationLogic {
     
-    func presentSomethingOnSuccess(response: MovieFavorite.Something.Response) {
-        let viewModel = MovieFavorite.Something.ViewModel()
+    func presentSomethingOnSuccess(response: MovieFavorite.Response) {
+        let viewModel = MovieFavorite.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)
     }
 

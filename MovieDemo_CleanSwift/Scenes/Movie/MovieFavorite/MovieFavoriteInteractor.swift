@@ -9,8 +9,11 @@
 import UIKit
 
 class MovieFavoriteInteractor {
+    
     var presenter: MovieFavoritePresentationLogic?
     var worker: MovieFavoriteWorkerProtocol?
+
+    var movieList: [MD_Movie]?
 
     required init(presenter: MovieFavoritePresentationLogic? = nil,
                   worker: MovieFavoriteWorkerProtocol? = MovieFavoriteWorker()) {
@@ -20,10 +23,12 @@ class MovieFavoriteInteractor {
 }
 
 extension MovieFavoriteInteractor: MovieFavoriteDataStore, MovieFavoriteBusinessLogic {
-    func doSomething(request: MovieFavorite.Something.Request) {
+        
+    func doSomething(request: MovieFavorite.Request) {
+        
         worker?.doSomeWork()
         
-        let response = MovieFavorite.Something.Response()
+        let response = MovieFavorite.Response()
         presenter?.presentSomethingOnSuccess(response: response)
     }
 }

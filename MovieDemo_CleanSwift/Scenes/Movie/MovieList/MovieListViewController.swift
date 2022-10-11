@@ -9,7 +9,7 @@
 import UIKit
 import Material
 
-class MovieListViewController: UIViewController {
+class MovieListViewController: UIViewController, MovieListDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var widthVLeft: NSLayoutConstraint!
@@ -20,8 +20,10 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var btnLogout: Button!
     
     var interactor: MovieListBusinessLogic?
-    var router: (MovieListRoutingLogic & MovieListDataPassing)?
+    var router: (NSObjectProtocol & MovieListRoutingLogic & MovieListDataPassing)?
     
+    var viewModel = MovieList.ViewModel()
+
     lazy var searchButton: UIBarButtonItem = {
         
         let button = UIButton(type: .system)
@@ -49,13 +51,15 @@ class MovieListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupView()
-        doSomething()
+        prepareInfo()
     }
 
     private func setupView() {
@@ -103,6 +107,12 @@ class MovieListViewController: UIViewController {
         registerCells()
     }
     
+    func prepareInfo() {
+        
+        interactor?.fetchLocalMovieList()
+        fetchMovieList(with: "naruto")
+    }
+    
     func prepareSearchBar() {
         
         searchController = UISearchController(searchResultsController: nil)
@@ -147,9 +157,7 @@ class MovieListViewController: UIViewController {
         alert.textFields![0].placeholder = "Movie name"
         
         let submitAction = UIAlertAction(title: "Ok", style: .default) { [unowned alert] _ in
-            
-            let textfield = alert.textFields![0]
-//            self.fetchMovie(with: textfield.text ?? "")
+            self.fetchMovieList(with: alert.textFields?[0].text ?? "")
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { [unowned alert] _ in }
@@ -160,29 +168,23 @@ class MovieListViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func doSomething() {
-        let request = MovieList.Something.Request()
-        interactor?.doSomething(request: request)
+    func fetchMovieList(with text: String) {
+                
+        viewModel.searchText = text
+        
+        let request = MovieList.Request(searchText: text, user: AuthenLocal.shared.fetchUser())
+        interactor?.fetchMovie(request: request)
     }
     
     @IBAction func btnFavMovieDidTapped(_ sender: Any) {
-//        presentMovieFavoriteView()
-    }
-    
-    func presentMovieFavoriteView() {
         
-        let identifier = "MovieFavoriteViewController"
-        let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieFavoriteViewController
-        viewController?.modalPresentationStyle = .fullScreen
-//        viewController?.delegate = self
-//        viewController?.movieList = viewModel.filterFavoriteMovie(movies: movieList)
-        self.navigationController?.pushViewController(viewController!, animated: true)
+        let viewModel = MovieList.ViewModel(movieList: viewModel.movieList)
+        interactor?.displayMovieFavorite(viewModel: viewModel)
     }
-    
     
     @IBAction func btnLogoutDidTapped(_ sender: Any) {
         
-//        viewModel.userLogout()
+        interactor?.userSignout()
     }
     
     func presentLogin() {
@@ -190,21 +192,41 @@ class MovieListViewController: UIViewController {
         let identifier = "LoginViewController"
         let viewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? LoginViewController
         viewController?.modalPresentationStyle = .fullScreen
-//        viewController?.delegate = self
+
         let nav = UINavigationController(rootViewController: viewController!)
         nav.modalPresentationStyle = .fullScreen
         self.present(nav, animated: true)
     }
 }
 
-extension MovieListViewController : MovieListDisplayLogic {
+extension MovieListViewController {
     
-    func displaySomethingOnSuccess(viewModel: MovieList.Something.ViewModel) {
+    func displayLoading(_ isLoading: Bool) {
+        
+        LoadIndicator.displayLoading(isLoading)
+    }
+
+    func fetchMovieListSuccess(viewModel: MovieList.ViewModel) {
+        
+        self.viewModel = viewModel
+        reloadData()
+    }
+
+    func displaySomethingOnSuccess(viewModel: MovieList.ViewModel) {
         
     }
 
     func displayErrorMessage(errorMessage: String) {
         
+    }
+    
+    func presentFavoriteMovie(response: MovieList.Response) {
+        
+        let identifier = "MovieFavoriteViewController"
+        let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieFavoriteViewController
+        viewController?.modalPresentationStyle = .fullScreen        
+        viewController?.router?.dataStore?.movieList = response.filterMovieList
+        self.navigationController?.pushViewController(viewController!, animated: true)
     }
 }
 
@@ -212,6 +234,7 @@ extension MovieListViewController : MovieListDisplayLogic {
 extension MovieListViewController {
     
     private func configure() {
+        
         MovieListConfiguration.shared.configure(self)
     }
 }
@@ -219,21 +242,31 @@ extension MovieListViewController {
 extension MovieListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-//        guard indexPath.row < (filterMovieList?.count ?? 0) else { return }
-//
-//        let movie = filterMovieList?[indexPath.row]
-//        presentMovieDetail(with: movie)
+                
+        guard indexPath.row < (viewModel.filterMovieList?.count ?? 0) else { return }
+
+        let movie = viewModel.filterMovieList?[indexPath.row]
+        router?.displayMovieDetail(with: movie)
     }
     
     func presentMovieDetail(with movie: MD_Movie?) {
         
         let identifier = "MovieDetailViewController"
         let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieDetailViewController
-//        viewController?.movie = movie
-//        viewController?.delegate = self
+        viewController?.router?.dataStore?.movie = movie
+        viewController?.delegate = self
         viewController?.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(viewController!, animated: true)
+    }
+}
+
+extension MovieListViewController: MovieDetailDelegate {
+
+    func hasUpdateMovieStatus(with updatedMovie: MD_Movie?) {
+
+        let viewModel = MovieList.ViewModel()
+        let request = MovieList.Request(searchText: viewModel.searchText, user: AuthenLocal.shared.fetchUser())
+        interactor?.fetchMovie(request: request)
     }
 }
 
@@ -241,30 +274,30 @@ extension MovieListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-//        if (filterMovieList?.count ?? 0) == 0 {
-//            return tableView.frame.size.height
-//        }
+        if (viewModel.filterMovieList?.count ?? 0) == 0 {
+            return tableView.frame.size.height
+        }
         
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        if (filterMovieList?.count ?? 0) == 0 {
+        if (viewModel.filterMovieList?.count ?? 0) == 0 {
             return 1
-//        }
-//
-//        return filterMovieList?.count ?? 1
+        }
+
+        return viewModel.filterMovieList?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        guard indexPath.row < (filterMovieList?.count ?? 0) else {
+        guard indexPath.row < (viewModel.filterMovieList?.count ?? 0) else {
             return prepareNoDataCell()
-//        }
-//
-//        let movie = filterMovieList?[indexPath.row]
-//        return prepareMovieCell(with: movie)
+        }
+
+        let movie = viewModel.filterMovieList?[indexPath.row]
+        return prepareMovieCell(with: movie)
     }
     
     func prepareMovieCell(with movie: MD_Movie?) -> UITableViewCell {
@@ -287,44 +320,41 @@ extension MovieListViewController: UITableViewDataSource {
 extension MovieListViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-//        self.searchText = searchText
-//        filterMovie(with: searchText)
+
+        filterMovie(with: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
-//        self.searchText = nil
-//        filterMovieList = movieList
-//        reloadData()
+        viewModel.filterMovieList = viewModel.movieList
+        reloadData()
     }
     
     func filterMovie(with text: String) {
         
-//        viewModel.filterMovie(with: text, movies: movieList)
+        interactor?.filterMovie(with: text, movies: viewModel.movieList)
     }
     
     func filterMovieSuccess(filterList: [MD_Movie]?) {
         
-//        filterMovieList = filterList
-//        reloadData()
+        viewModel.filterMovieList = filterList
+        reloadData()
     }
 }
 
 extension MovieListViewController: MovieDelegate {
     
     func userDidTappedFav(with movie: MD_Movie) {
+                
+        let updatedMovie = movie
+        updatedMovie.isFav = !updatedMovie.isFav
         
-//        guard let userId = user?.userId else { return }
-//
-//        LoadIndicator.showDefaultLoading()
-//        viewModel.setMovieStatus(with: movie, userId: userId)
+        let request = MovieList.Request(user: AuthenLocal.shared.fetchUser(), updatedMovie: updatedMovie)
+        interactor?.updateMovieStatus(request: request)
     }
-    
     
     func updateMovieStatusSuccess(with movie: MD_Movie) {
         
-//        viewModel.fetchLocalMovieList()
-//        LoadIndicator.dismissLoading()
+        interactor?.fetchLocalMovieList()
     }
 }

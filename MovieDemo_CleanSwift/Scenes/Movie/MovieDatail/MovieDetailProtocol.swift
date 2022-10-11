@@ -10,24 +10,37 @@ import Foundation
 
 //MARK: ViewController
 protocol MovieDetailDisplayLogic {
-    func displaySomethingOnSuccess(viewModel: MovieDetail.Something.ViewModel)
+    
+    func presentSafari(with url: URL)
+    func updateMovieStatusSuccess()
+    func displaySomethingOnSuccess(viewModel: MovieDetail.ViewModel)
     func displayErrorMessage(errorMessage: String)   
 }
 
 //MARK: Interactor
 protocol MovieDetailBusinessLogic {
-    func doSomething(request: MovieDetail.Something.Request)
+    
+    func updateMovieStatus(request: MovieDetail.Request)
+    
+    func displayWebsite(with movie: MD_Movie?)
+    func doSomething(request: MovieDetail.Request)
 }
 
 //MARK: Presenter
 protocol MovieDetailPresentationLogic {
-    func presentSomethingOnSuccess(response: MovieDetail.Something.Response)
+    
+    func updateMovieStatusSuccess()
+    
+    func presentSafari(with url: URL)
+    func presentSomethingOnSuccess(response: MovieDetail.Response)
     func presentErrorMessage(errorMessage: String)
 }
 
 //MARK: Worker
-@objc protocol MovieDetailWorkerProtocol {
-    func doSomeWork()
+protocol MovieDetailWorkerProtocol {
+    
+    func updateMovieStatus(request: MovieDetail.Request,
+                           completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void)
 }
 
 //MARK: Routable
@@ -38,9 +51,10 @@ protocol MovieDetailPresentationLogic {
 //MARK: DataStore
 protocol MovieDetailDataStore {
 
+    var movie: MD_Movie? { get set }
 }
 
 //MARK: DataPassing
 protocol MovieDetailDataPassing {
-    var dataStore: MovieDetailDataStore? { get }
+    var dataStore: MovieDetailDataStore? { get set }
 }

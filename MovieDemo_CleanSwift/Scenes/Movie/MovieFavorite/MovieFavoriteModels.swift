@@ -9,15 +9,14 @@
 import UIKit
 
 enum MovieFavorite {
-    enum Something {
-        struct Request{
-
-        }
-        struct Response{
-
-        }
-        struct ViewModel{
-
-        }
+    
+    struct Request{
+        
+    }
+    struct Response{
+        
+    }
+    struct ViewModel{
+        var movieList: [MD_Movie]?
     }
 }

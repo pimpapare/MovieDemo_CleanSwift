@@ -9,9 +9,10 @@
 import UIKit
 
 class LoginInteractor {
+    
     var presenter: LoginPresentationLogic?
     var worker: LoginWorkerProtocol?
-
+    
     required init(presenter: LoginPresentationLogic? = nil,
                   worker: LoginWorkerProtocol? = LoginWorker()) {
         self.presenter = presenter
@@ -20,8 +21,36 @@ class LoginInteractor {
 }
 
 extension LoginInteractor: LoginDataStore, LoginBusinessLogic {
+    
+    func verifyForm(request: Login.Request) {
+        
+        presenter?.presentLoader(true)
+
+        guard let email = request.email, email.count > 0,
+                let password = request.password, password.count > 0 else {
+            presenter?.presentErrorMessage(errorMessage: "Please input username or password")
+            return
+        }
+        
+        userSignin(with: email, password: password)
+    }
+    
+    func userSignin(with email: String, password: String) {
+                
+        worker?.userSignin(with: email, password: password, completion: { user, errorMessage in
+            
+            if let error = errorMessage {
+                self.presenter?.presentErrorMessage(errorMessage: error)
+            }else {
+             
+                var response = Login.Response()
+                response.user = user
+                self.presenter?.userSigninSuccess(response: response)
+            }
+        })
+    }
+    
     func doSomething(request: Login.Request) {
-        worker?.doSomeWork()
         
         let response = Login.Response()
         presenter?.presentSomethingOnSuccess(response: response)

@@ -9,7 +9,21 @@
 import UIKit
 
 class RegisterWorker: RegisterWorkerProtocol {
-    func doSomeWork() {
+    
+    func userSignup(with email: String, password: String,
+                      completion: @escaping (_ user: MD_User?, _ errorMessage: String?)-> Void) {
         
+        AuthenRemote.shared.userSignup(with: email, password: password) { result, errorMessage in
+            
+            if let value = result {
+
+                let user = AuthenLocal.shared.saveUser(email, userId: value.user.uid)
+                completion(user, errorMessage)
+                
+            }else {
+                
+                completion(nil, errorMessage)
+            }
+        }
     }
 }

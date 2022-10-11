@@ -10,6 +10,11 @@ import SVProgressHUD
 
 class LoadIndicator: NSObject {
 
+    static func displayLoading(_ isLoading: Bool) {
+        
+        isLoading ? LoadIndicator.showDefaultLoading() : LoadIndicator.dismissLoading()
+    }
+    
     static func showDefaultLoading() {
         
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.dark)

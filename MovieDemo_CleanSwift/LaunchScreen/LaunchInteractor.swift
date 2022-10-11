@@ -12,7 +12,7 @@ class LaunchInteractor {
     
     var presenter: LaunchPresentationLogic?
     var worker: LaunchWorkerProtocol?
-
+    
     required init(presenter: LaunchPresentationLogic? = nil,
                   worker: LaunchWorkerProtocol? = LaunchWorker()) {
         self.presenter = presenter
@@ -31,7 +31,9 @@ extension LaunchInteractor: LaunchDataStore, LaunchBusinessLogic {
     }
     
     func verifyAuthen() {
-     
+        
+        guard AuthenLocal.shared.fetchUser() == nil else { return }
+        
         presenter?.presentLogin()
     }
 }

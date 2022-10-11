@@ -18,8 +18,16 @@ class MovieDetailPresenter {
 
 extension MovieDetailPresenter: MovieDetailPresentationLogic {
     
-    func presentSomethingOnSuccess(response: MovieDetail.Something.Response) {
-        let viewModel = MovieDetail.Something.ViewModel()
+    func updateMovieStatusSuccess() {
+        viewController?.updateMovieStatusSuccess()
+    }
+
+    func presentSafari(with url: URL) {
+        viewController?.presentSafari(with: url)
+    }
+    
+    func presentSomethingOnSuccess(response: MovieDetail.Response) {
+        let viewModel = MovieDetail.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)
     }
 

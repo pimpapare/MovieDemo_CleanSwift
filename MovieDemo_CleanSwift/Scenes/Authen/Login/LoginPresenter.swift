@@ -18,6 +18,14 @@ class LoginPresenter {
 
 extension LoginPresenter: LoginPresentationLogic {
     
+    func presentLoader(_ isLoading: Bool) {
+        viewController?.displayLoading(isLoading)
+    }
+    
+    func userSigninSuccess(response: Login.Response?) {
+        viewController?.displayMovieList(with: response?.user)
+    }
+
     func presentSomethingOnSuccess(response: Login.Response) {
         let viewModel = Login.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)

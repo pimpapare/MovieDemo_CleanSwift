@@ -9,15 +9,30 @@
 import UIKit
 
 enum MovieList {
-    enum Something {
-        struct Request{
+    
+    struct Request{
+        
+        var searchText: String?
+        var allAnieme: [Movie] = [Movie]()
+        
+        var user: MD_User?
+        var updatedMovie: MD_Movie?
+    }
+    
+    struct Response{
+       
+        var user: MD_User?
+        var movieList: [MD_Movie]?
+        var filterMovieList: [MD_Movie]?
+    }
+    
+    struct ViewModel{
+        
+        var user: MD_User?
 
-        }
-        struct Response{
-
-        }
-        struct ViewModel{
-
-        }
+        var searchText: String = "naruto"
+        
+        var movieList: [MD_Movie]?
+        var filterMovieList: [MD_Movie]?
     }
 }

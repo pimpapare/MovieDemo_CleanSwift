@@ -9,15 +9,20 @@
 import UIKit
 
 enum MovieDetail {
-    enum Something {
-        struct Request{
-
-        }
-        struct Response{
-
-        }
-        struct ViewModel{
-
-        }
+    
+    struct Request{
+        
+        var movie: MD_Movie?
+        var userId: String?
+    }
+    
+    struct Response{
+        
+    }
+    
+    struct ViewModel{
+        
+        var movie: MD_Movie?
+        var user: MD_User?
     }
 }

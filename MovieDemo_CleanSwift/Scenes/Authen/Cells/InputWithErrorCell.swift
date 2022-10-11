@@ -38,17 +38,17 @@ class InputWithErrorCell: UITableViewCell {
         txError.text = nil
     }
     
-    func prepareCell(with type: Authen, user: Authen.ViewModel.User?) {
+    func prepareCell(with type: Authen, user: Authen.ViewModel) {
         
         currentType = type
         
         switch currentType {
         case .email:
-            setText(with: user?.email)
+            setText(with: user.email)
         case .password:
-            setText(with: user?.password)
+            setText(with: user.password)
         case .confirmPassword:
-            setText(with: user?.confirmPassword)
+            setText(with: user.confirmPassword)
         default: break
         }
         
@@ -79,7 +79,7 @@ class InputWithErrorCell: UITableViewCell {
         txError.text = text
     }
     
-    func verifyCell(with type: Authen, user: Authen.ViewModel.User) {
+    func verifyCell(with type: Authen, user: Authen.ViewModel) {
         
         setErrorText(with: nil)
 
