@@ -46,6 +46,7 @@ protocol MovieDetailWorkerProtocol {
 //MARK: Routable
 @objc protocol MovieDetailRoutingLogic {
 
+    func presentSafari(with url: URL)
 }
 
 //MARK: DataStore

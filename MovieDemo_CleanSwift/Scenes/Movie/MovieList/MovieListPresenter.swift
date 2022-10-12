@@ -18,6 +18,10 @@ class MovieListPresenter {
 
 extension MovieListPresenter: MovieListPresentationLogic {
     
+    func presentLogin() {
+        viewController?.presentLogin()
+    }
+    
     func presentLoader(_ isLoading: Bool) {
         viewController?.displayLoading(isLoading)
     }

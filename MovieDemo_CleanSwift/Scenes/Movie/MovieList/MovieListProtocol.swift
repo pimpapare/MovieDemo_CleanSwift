@@ -11,6 +11,7 @@ import Foundation
 //MARK: ViewController
 protocol MovieListDisplayLogic {
     
+    func presentLogin()
     func displayLoading(_ isLoading: Bool)
 
     func fetchMovieListSuccess(viewModel: MovieList.ViewModel)
@@ -39,6 +40,7 @@ protocol MovieListBusinessLogic {
 //MARK: Presenter
 protocol MovieListPresentationLogic {
     
+    func presentLogin()
     func presentLoader(_ isLoading: Bool)
 
     func fetchMovieListSuccess(response: MovieList.Response)
@@ -64,8 +66,10 @@ protocol MovieListWorkerProtocol {
 }
 
 //MARK: Routable
-@objc protocol MovieListRoutingLogic {
+protocol MovieListRoutingLogic {
     
+    func displayLogin()
+    func displayFavoriteMovie(response: MovieList.Response)
     func displayMovieDetail(with movie: MD_Movie?)
 }
 

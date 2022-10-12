@@ -115,20 +115,10 @@ extension MovieFavoriteViewController: UITableViewDelegate {
         
         guard indexPath.row < (movieModel?.movieList?.count ?? 0) else { return }
 
+        isBack = false
+
         let movie = movieModel?.movieList?[indexPath.row]
         router?.displayMovieDetail(with: movie)
-    }
-    
-    func presentMovieDetail(with movie: MD_Movie?) {
-        
-        isBack = false
-        
-        let identifier = "MovieDetailViewController"
-        let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieDetailViewController
-        viewController?.router?.dataStore?.movie = movie
-        viewController?.delegate = self
-        viewController?.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(viewController!, animated: true)
     }
 }
 

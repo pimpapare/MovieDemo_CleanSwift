@@ -232,14 +232,6 @@ extension LoginViewController: ButtonDelegate {
         LoadIndicator.showDefaultLoading()
     }
     
-    func presentRegisterView() {
-        
-        let identifier = "RegisterViewController"
-        let viewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? RegisterViewController
-        viewController?.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(viewController!, animated: true)
-    }
-    
     func verifyFormFailed() {
         
         isNeedVerify = true

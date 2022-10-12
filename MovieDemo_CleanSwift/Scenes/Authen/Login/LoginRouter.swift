@@ -14,6 +14,10 @@ class LoginRouter: NSObject, LoginRoutingLogic, LoginDataPassing {
     var dataStore: LoginDataStore?
     
     func displayRegister() {
-        viewController?.presentRegisterView()
+        
+        let identifier = "RegisterViewController"
+        guard let registerViewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? RegisterViewController else { return }
+        registerViewController.modalPresentationStyle = .fullScreen
+        viewController?.navigationController?.pushViewController(registerViewController, animated: true)
     }
 }

@@ -37,15 +37,17 @@ extension LoginInteractor: LoginDataStore, LoginBusinessLogic {
     
     func userSignin(with email: String, password: String) {
                 
-        worker?.userSignin(with: email, password: password, completion: { user, errorMessage in
+        worker?.userSignin(with: email, password: password, completion: { [weak self] user, errorMessage in
             
+            guard let weakSelf = self else { return }
+
             if let error = errorMessage {
-                self.presenter?.presentErrorMessage(errorMessage: error)
+                weakSelf.presenter?.presentErrorMessage(errorMessage: error)
             }else {
              
                 var response = Login.Response()
                 response.user = user
-                self.presenter?.userSigninSuccess(response: response)
+                weakSelf.presenter?.userSigninSuccess(response: response)
             }
         })
     }

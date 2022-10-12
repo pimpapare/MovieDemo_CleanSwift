@@ -15,6 +15,21 @@ class LaunchRouter: NSObject, LaunchRoutingLogic, LaunchDataPassing {
     
     func displayMovieList() {
         
-        viewController?.presentMovie()
+        let identifier = "MovieListViewController"
+        guard let movieViewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieListViewController else { return }
+        movieViewController.modalPresentationStyle = .fullScreen
+        viewController?.navigationController?.pushViewController(movieViewController, animated: false)
+    }
+    
+    func displayLogin() {
+        
+        let identifier = "LoginViewController"
+        
+        guard let loginViewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? LoginViewController else { return }
+        loginViewController.modalPresentationStyle = .fullScreen
+        
+        let nav = UINavigationController(rootViewController: loginViewController)
+        nav.modalPresentationStyle = .fullScreen
+        viewController?.present(nav, animated: true)
     }
 }

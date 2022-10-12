@@ -47,11 +47,13 @@ class MovieListInteractor: MovieListDataStore, MovieListBusinessLogic {
         
         presenter?.presentLoader(true)
         
-        worker?.fetchMovie(request: request, completion: { success, errorMessage, result in
+        worker?.fetchMovie(request: request, completion: { [weak self] success, errorMessage, result in
+            
+            guard let weakSelf = self else { return }
             
             let response = MovieList.Response(user: request.user, movieList: result, filterMovieList: result)
-            self.presenter?.fetchMovieListSuccess(response: response)
-            self.presenter?.presentLoader(false)
+            weakSelf.presenter?.fetchMovieListSuccess(response: response)
+            weakSelf.presenter?.presentLoader(false)
         })
     }
     
@@ -59,11 +61,13 @@ class MovieListInteractor: MovieListDataStore, MovieListBusinessLogic {
         
         presenter?.presentLoader(true)
         
-        worker?.fetchLocalMovieList(completion: { movieList in
+        worker?.fetchLocalMovieList(completion: { [weak self] movieList in
             
+            guard let weakSelf = self else { return }
+
             let response = MovieList.Response(movieList: movieList, filterMovieList: movieList)
-            self.presenter?.fetchMovieListSuccess(response: response)
-            self.presenter?.presentLoader(false)
+            weakSelf.presenter?.fetchMovieListSuccess(response: response)
+            weakSelf.presenter?.presentLoader(false)
         })
     }
     
@@ -71,13 +75,15 @@ class MovieListInteractor: MovieListDataStore, MovieListBusinessLogic {
         
         presenter?.presentLoader(true)
         
-        worker?.updateMovieStatus(request: request, completion: { success, errorMessage in
+        worker?.updateMovieStatus(request: request, completion: { [weak self] success, errorMessage in
             
+            guard let weakSelf = self else { return }
+
             if let error = errorMessage {
-                self.presenter?.presentErrorMessage(errorMessage: error)
+                weakSelf.presenter?.presentErrorMessage(errorMessage: error)
             }
             
-            self.presenter?.presentLoader(false)
+            weakSelf.presenter?.presentLoader(false)
         })
     }
 
@@ -85,13 +91,16 @@ class MovieListInteractor: MovieListDataStore, MovieListBusinessLogic {
         
         presenter?.presentLoader(true)
         
-        worker?.userSignout(completion: { success, errorMessage in
+        worker?.userSignout(completion: { [weak self] success, errorMessage in
             
+            guard let weakSelf = self else { return }
+
             if let error = errorMessage {
-                self.presenter?.presentErrorMessage(errorMessage: error)
+                weakSelf.presenter?.presentErrorMessage(errorMessage: error)
             }
             
-            self.presenter?.presentLoader(false)
+            weakSelf.presenter?.presentLogin()
+            weakSelf.presenter?.presentLoader(false)
         })
     }
     

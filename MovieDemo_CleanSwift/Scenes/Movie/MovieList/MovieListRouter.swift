@@ -15,6 +15,32 @@ class MovieListRouter: NSObject, MovieListRoutingLogic, MovieListDataPassing {
     
     func displayMovieDetail(with movie: MD_Movie?) {
         
-        viewController?.presentMovieDetail(with: movie)
+        let identifier = "MovieDetailViewController"
+        guard let detailViewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieDetailViewController else { return }
+        detailViewController.router?.dataStore?.movie = movie
+        detailViewController.delegate = viewController
+        detailViewController.modalPresentationStyle = .fullScreen
+        viewController?.navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    func displayFavoriteMovie(response: MovieList.Response) {
+        
+        let identifier = "MovieFavoriteViewController"
+        guard let favViewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieFavoriteViewController else { return }
+        favViewController.delegate = viewController
+        favViewController.modalPresentationStyle = .fullScreen
+        favViewController.router?.dataStore?.movieList = response.filterMovieList
+        viewController?.navigationController?.pushViewController(favViewController, animated: true)
+    }
+    
+    func displayLogin() {
+        
+        let identifier = "LoginViewController"
+        guard let loginViewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? LoginViewController else { return }
+        loginViewController.modalPresentationStyle = .fullScreen
+
+        let nav = UINavigationController(rootViewController: loginViewController)
+        nav.modalPresentationStyle = .fullScreen
+        viewController?.present(nav, animated: true)
     }
 }

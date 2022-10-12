@@ -50,15 +50,17 @@ extension RegisterInteractor {
     
     func userSignup(with email: String, password: String) {
                 
-        worker?.userSignup(with: email, password: password, completion: { user, errorMessage in
+        worker?.userSignup(with: email, password: password, completion: { [weak self] user, errorMessage in
+            
+            guard let weakSelf = self else { return }
             
             if let error = errorMessage {
-                self.presenter?.presentErrorMessage(errorMessage: error)
+                weakSelf.presenter?.presentErrorMessage(errorMessage: error)
             }else {
              
                 var response = Register.Response()
                 response.user = user
-                self.presenter?.userSignupSuccess(response: response)
+                weakSelf.presenter?.userSignupSuccess(response: response)
             }
         })
     }

@@ -186,20 +186,14 @@ class MovieListViewController: UIViewController, MovieListDisplayLogic {
         
         interactor?.userSignout()
     }
-    
-    func presentLogin() {
-        
-        let identifier = "LoginViewController"
-        let viewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? LoginViewController
-        viewController?.modalPresentationStyle = .fullScreen
-
-        let nav = UINavigationController(rootViewController: viewController!)
-        nav.modalPresentationStyle = .fullScreen
-        self.present(nav, animated: true)
-    }
 }
 
 extension MovieListViewController {
+    
+    func presentLogin() {
+        
+        router?.displayLogin()
+    }
     
     func displayLoading(_ isLoading: Bool) {
         
@@ -222,12 +216,7 @@ extension MovieListViewController {
     
     func presentFavoriteMovie(response: MovieList.Response) {
         
-        let identifier = "MovieFavoriteViewController"
-        let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieFavoriteViewController
-        viewController?.delegate = self
-        viewController?.modalPresentationStyle = .fullScreen        
-        viewController?.router?.dataStore?.movieList = response.filterMovieList
-        self.navigationController?.pushViewController(viewController!, animated: true)
+        router?.displayFavoriteMovie(response: response)
     }
 }
 
@@ -256,16 +245,6 @@ extension MovieListViewController: UITableViewDelegate {
 
         let movie = viewModel.filterMovieList?[indexPath.row]
         router?.displayMovieDetail(with: movie)
-    }
-    
-    func presentMovieDetail(with movie: MD_Movie?) {
-        
-        let identifier = "MovieDetailViewController"
-        let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieDetailViewController
-        viewController?.router?.dataStore?.movie = movie
-        viewController?.delegate = self
-        viewController?.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(viewController!, animated: true)
     }
 }
 

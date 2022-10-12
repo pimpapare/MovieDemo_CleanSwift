@@ -12,9 +12,14 @@ class MovieFavoriteRouter: NSObject, MovieFavoriteRoutingLogic, MovieFavoriteDat
     
     weak var viewController: MovieFavoriteViewController?
     var dataStore: MovieFavoriteDataStore?
-
+    
     func displayMovieDetail(with movie: MD_Movie?) {
         
-        viewController?.presentMovieDetail(with: movie)
+        let identifier = "MovieDetailViewController"
+        guard let detailViewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieDetailViewController else { return }
+        detailViewController.router?.dataStore?.movie = movie
+        detailViewController.delegate = viewController
+        detailViewController.modalPresentationStyle = .fullScreen
+        viewController?.navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

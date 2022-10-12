@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import SafariServices
 
 class MovieDetailRouter: NSObject, MovieDetailRoutingLogic, MovieDetailDataPassing {
+    
     weak var viewController: MovieDetailViewController?
     var dataStore: MovieDetailDataStore?
+    
+    func presentSafari(with url: URL) {
+        
+        let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+        viewController?.present(vc, animated: true)
+    }
 }

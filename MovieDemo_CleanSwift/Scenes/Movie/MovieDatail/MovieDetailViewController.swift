@@ -8,7 +8,6 @@
 
 import UIKit
 import Material
-import SafariServices
 
 protocol MovieDetailDelegate {
     
@@ -129,11 +128,8 @@ class MovieDetailViewController: UIViewController {
     }
     
     func presentSafari(with url: URL) {
-        
-        let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
-        vc.delegate = self
-        
-        present(vc, animated: true)
+       
+        router?.presentSafari(with: url)
     }
     
     @IBAction func btnAddToFavDidTapped(_ sender: Any) {
@@ -185,11 +181,6 @@ extension MovieDetailViewController {
     private func configure() {
         MovieDetailConfiguration.shared.configure(self)
     }
-}
-
-extension MovieDetailViewController: SFSafariViewControllerDelegate {
-    
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) { }
 }
 
 extension MovieDetailViewController: UITableViewDelegate {

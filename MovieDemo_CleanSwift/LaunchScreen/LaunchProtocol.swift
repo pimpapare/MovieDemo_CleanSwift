@@ -39,6 +39,7 @@ protocol LaunchPresentationLogic {
 //MARK: Routable
 @objc protocol LaunchRoutingLogic {
 
+    func displayLogin()
     func displayMovieList()
 }
 

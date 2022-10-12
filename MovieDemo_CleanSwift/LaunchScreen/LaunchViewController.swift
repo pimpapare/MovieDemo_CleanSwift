@@ -47,24 +47,9 @@ class LaunchViewController: UIViewController {
         interactor?.verifyAuthen()
     }
     
-    func presentMovie() {
-        
-        let identifier = "MovieListViewController"
-        let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieListViewController
-        viewController?.modalPresentationStyle = .fullScreen
-        
-        navigationController?.pushViewController(viewController!, animated: false)
-    }
-    
     func presentLogin() {
         
-        let identifier = "LoginViewController"
-        let viewController = UIStoryboard(name: "Authen", bundle: nil).instantiateViewController(withIdentifier: identifier) as? LoginViewController
-        viewController?.modalPresentationStyle = .fullScreen
-        
-        let nav = UINavigationController(rootViewController: viewController!)
-        nav.modalPresentationStyle = .fullScreen
-        self.present(nav, animated: true)
+        router?.displayLogin()
     }
 }
 
@@ -81,6 +66,7 @@ extension LaunchViewController : LaunchDisplayLogic {
 
 // MARK: Setup & Configuration
 extension LaunchViewController {
+    
     private func configure() {
         LaunchConfiguration.shared.configure(self)
     }

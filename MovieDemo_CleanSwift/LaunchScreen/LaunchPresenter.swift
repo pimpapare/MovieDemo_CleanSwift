@@ -19,15 +19,14 @@ class LaunchPresenter {
 extension LaunchPresenter: LaunchPresentationLogic {
     
     func presentLogin() {
-        
         viewController?.presentLogin()
     }
-
+    
     func presentSomethingOnSuccess(response: Launch.Something.Response) {
         let viewModel = Launch.Something.ViewModel()
         viewController?.displaySomethingOnSuccess(viewModel: viewModel)
     }
-
+    
     func presentErrorMessage(errorMessage: String) {
         viewController?.displayErrorMessage(errorMessage: errorMessage)
     }
