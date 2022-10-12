@@ -43,10 +43,10 @@ public class MovieRemote {
     }
     
     func updateMovieStatus(documentId: String?, movie: MD_Movie?, userId: String?,
-                           completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void) {
+                           completion: @escaping (_ success: Bool, _ errorMessage: String?, _ documentId: String?)-> Void) {
         
         guard let currentUserId = userId, let updateMovie = movie else {
-            completion(false, nil)
+            completion(false, nil, nil)
             return
         }
         
@@ -58,7 +58,7 @@ public class MovieRemote {
                 
                 if let value = responseDocumentId {
                     
-                    completion(true, nil)
+                    completion(true, nil, value)
                     MovieLocal.shared.saveMovieStatus(of: movie, isFav: true, documentId: value)
                 }
             }
@@ -70,13 +70,13 @@ public class MovieRemote {
             }
             
             guard (movieDocumentId?.count ?? 0) > 0 else {
-                completion(false, nil)
+                completion(false, nil, nil)
                 return
             }
             
             removeFavoriteMovie(from: currentUserId, documentId: movieDocumentId ?? "") { success, errorMessage in
                 
-                completion(true, nil)
+                completion(true, nil, nil)
                 MovieLocal.shared.saveMovieStatus(of: movie, isFav: false, documentId: "")
             }
         }

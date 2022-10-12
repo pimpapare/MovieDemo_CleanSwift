@@ -18,7 +18,12 @@ class MovieDetailPresenter {
 
 extension MovieDetailPresenter: MovieDetailPresentationLogic {
     
-    func updateMovieStatusSuccess() {
+    func updateMovieStatusSuccess(with movie: MD_Movie?, documentId: String?) {
+        
+         if let value = movie {
+            MovieLocal.shared.saveMovieStatus(of: value, isFav: movie?.isFav ?? false, documentId: documentId)
+        }
+        
         viewController?.updateMovieStatusSuccess()
     }
 

@@ -90,7 +90,7 @@ extension MovieListWorker {
                            completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void) {
         
         MovieRemote.shared.updateMovieStatus(documentId: request.updatedMovie?.documentId,
-                                             movie: request.updatedMovie, userId: request.user?.userId) { success, errorMessage in
+                                             movie: request.updatedMovie, userId: request.user?.userId) { success, errorMessage, documentId in
             
             completion(success, errorMessage)
         }

@@ -14,7 +14,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var heightTableView: NSLayoutConstraint!
     
     lazy var user = {
-        return Authen.ViewModel.User()
+        return Register.Request()
     }()
     
     var interactor: RegisterBusinessLogic?

@@ -45,12 +45,13 @@ class MovieListInteractor: MovieListDataStore, MovieListBusinessLogic {
     
     func fetchMovie(request: MovieList.Request) {
         
+        presenter?.presentLoader(true)
+        
         worker?.fetchMovie(request: request, completion: { success, errorMessage, result in
             
             let response = MovieList.Response(user: request.user, movieList: result, filterMovieList: result)
             self.presenter?.fetchMovieListSuccess(response: response)
             self.presenter?.presentLoader(false)
-
         })
     }
     

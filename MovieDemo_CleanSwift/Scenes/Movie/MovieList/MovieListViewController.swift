@@ -224,9 +224,18 @@ extension MovieListViewController {
         
         let identifier = "MovieFavoriteViewController"
         let viewController = UIStoryboard(name: "Movie", bundle: nil).instantiateViewController(withIdentifier: identifier) as? MovieFavoriteViewController
+        viewController?.delegate = self
         viewController?.modalPresentationStyle = .fullScreen        
         viewController?.router?.dataStore?.movieList = response.filterMovieList
         self.navigationController?.pushViewController(viewController!, animated: true)
+    }
+}
+
+extension MovieListViewController: MovieFavoriteDelegate {
+
+    func hasUpdateMovieFavStatus() {
+        
+        interactor?.fetchLocalMovieList()
     }
 }
 
@@ -264,9 +273,7 @@ extension MovieListViewController: MovieDetailDelegate {
 
     func hasUpdateMovieStatus(with updatedMovie: MD_Movie?) {
 
-        let viewModel = MovieList.ViewModel()
-        let request = MovieList.Request(searchText: viewModel.searchText, user: AuthenLocal.shared.fetchUser())
-        interactor?.fetchMovie(request: request)
+        interactor?.fetchLocalMovieList()
     }
 }
 

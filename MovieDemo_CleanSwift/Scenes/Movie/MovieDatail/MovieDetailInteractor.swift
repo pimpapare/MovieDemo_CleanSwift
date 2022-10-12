@@ -37,12 +37,12 @@ extension MovieDetailInteractor: MovieDetailDataStore, MovieDetailBusinessLogic 
     
     func updateMovieStatus(request: MovieDetail.Request) {
         
-        worker?.updateMovieStatus(request: request, completion: { success, errorMessage in
+        worker?.updateMovieStatus(request: request, completion: { success, errorMessage, documentId in
             
             if let error = errorMessage {
                 self.presenter?.presentErrorMessage(errorMessage: error)
             }else {
-                self.presenter?.updateMovieStatusSuccess()
+                self.presenter?.updateMovieStatusSuccess(with: request.movie, documentId: documentId)
             }
         })
     }

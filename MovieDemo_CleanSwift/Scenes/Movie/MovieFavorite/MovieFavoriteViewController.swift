@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol MovieFavoriteDelegate {
+    
+    func hasUpdateMovieFavStatus()
+}
+
 class MovieFavoriteViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -19,6 +24,8 @@ class MovieFavoriteViewController: UIViewController {
     
     var isBack: Bool = false
     var hasUpdate: Bool = false
+    
+    var delegate: MovieFavoriteDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
       super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -36,6 +43,12 @@ class MovieFavoriteViewController: UIViewController {
         doSomething()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        
+        if hasUpdate {
+            delegate?.hasUpdateMovieFavStatus()
+        }
+    }
     private func setupView() {
         
         title = "Favorite Movies"

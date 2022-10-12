@@ -11,12 +11,12 @@ import UIKit
 class MovieDetailWorker: MovieDetailWorkerProtocol {
     
     func updateMovieStatus(request: MovieDetail.Request,
-                           completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void) {
+                           completion: @escaping (_ success: Bool, _ errorMessage: String?, _ documentId: String?)-> Void) {
         
         MovieRemote.shared.updateMovieStatus(documentId: request.movie?.documentId,
-                                             movie: request.movie, userId: request.userId) { success, errorMessage in
+                                             movie: request.movie, userId: request.userId) { success, errorMessage, documentId in
             
-            completion(success, errorMessage)
+            completion(success, errorMessage, documentId)
         }
     }
 }

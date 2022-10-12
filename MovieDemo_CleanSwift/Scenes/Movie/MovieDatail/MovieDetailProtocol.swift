@@ -29,7 +29,7 @@ protocol MovieDetailBusinessLogic {
 //MARK: Presenter
 protocol MovieDetailPresentationLogic {
     
-    func updateMovieStatusSuccess()
+    func updateMovieStatusSuccess(with movie: MD_Movie?, documentId: String?)
     
     func presentSafari(with url: URL)
     func presentSomethingOnSuccess(response: MovieDetail.Response)
@@ -40,7 +40,7 @@ protocol MovieDetailPresentationLogic {
 protocol MovieDetailWorkerProtocol {
     
     func updateMovieStatus(request: MovieDetail.Request,
-                           completion: @escaping (_ success: Bool, _ errorMessage: String?)-> Void)
+                           completion: @escaping (_ success: Bool, _ errorMessage: String?, _ documentId: String?)-> Void)
 }
 
 //MARK: Routable
